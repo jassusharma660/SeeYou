@@ -1,0 +1,99 @@
+main .activity_icon {
+  display: block;
+  height: 3vw;
+  margin: 3vw 0;
+}
+
+main span img{
+  height: 100%;
+  vertical-align: middle;
+}
+
+main span b{
+  font-size: 1.4vw;
+}
+
+.panel {
+  width: 70%;
+  padding: 2vw 5vw;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.panel article {
+  margin-bottom: 1.5vw;
+  background: #eee;
+  padding: 1vw;
+  border-radius: 5px;
+}
+
+.panel article img {
+  height: 2vw;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.panel article a{
+  text-decoration: none;
+  color: #000;
+}
+.panel article button {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.4);
+  height: 2vw;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+  margin-left: 1vw;
+  outline: none;
+  font-size: 0.9vw;
+  padding: 0 1vw;
+}
+
+.panel article button:hover {
+  outline: none;
+}
+
+.panel article button.confirm {
+  background: #2143b1;
+  color: #fff;
+}
+
+.panel_nav {
+  width: 20%;
+  background: #fff;
+  color: #000;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.panel_nav span {
+  width: 100%;
+  display: block;
+  padding: 1vw 2vw;
+  cursor: pointer;
+  font-size: 0.9vw;
+}
+#activePanel {
+  color: #000;
+  font-weight: bold;
+  background-color: #aaa3;
+  border-right: 5px solid #000;
+}
+.panel_nav span:hover {
+  color: #444;
+  background-color: #aaa1;
+}
+.editLinks {
+  color: #2143b1;
+  font-size: 0.9vw;
+  cursor: pointer;
+}
+.editLinks:hover {
+  font-size:
+}
