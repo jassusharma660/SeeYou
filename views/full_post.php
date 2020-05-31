@@ -17,6 +17,10 @@
   </head>
 
   <body id="body" class="scrollbar">
+
+    <!--Overlay-for-edit-->
+    <div id="popOverlay"></div>
+    
     <!---Including-Website-Header-->
     <?php include_once './header.php';?>
 
