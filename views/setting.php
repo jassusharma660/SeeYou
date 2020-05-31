@@ -27,17 +27,15 @@
         <img src="../assets/images/icons/settings-50.png"/>
         <b>Settings</b>
       </span>
-      <section class="panel_nav">
-        <span id="activePanel" onclick="togglePanel(this,0)">Profile</span>
-        <span onclick="togglePanel(this,1)">Contact</span>
-        <span onclick="togglePanel(this,2)">Change Password</span>
-      </section>
+
       <section class="panel">
+
         <form action="" name="profileForm">
           <input type="text" name="nameFieldEdit" disabled="true">
           <span id="nameFieldEdit" class="editLinks">Edit</span><br/>
           <button type="button" name="button">Save</button>
         </form>
+
       </section>
       <section class="panel">2
         <form action="">
@@ -48,6 +46,11 @@
         <form action="">
 
         </form>
+      </section>
+      <section class="panel_nav">
+        <span id="activePanel" onclick="togglePanel(this,0)">Profile</span>
+        <span onclick="togglePanel(this,1)">Contact</span>
+        <span onclick="togglePanel(this,2)">Change Password</span>
       </section>
     </main>
 
