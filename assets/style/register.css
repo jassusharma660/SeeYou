@@ -1,10 +1,14 @@
 .register_left_pane {
-  margin: 10% auto;
+  margin: 2% auto;
   line-height: 1.3em;
+  text-align: center;
 }
 
 .register_left_pane span {
   font-size: 1.3em;
+}
+.register_left_pane img {
+  margin-top: 15%;
 }
 
 .register_right_pane .alert {

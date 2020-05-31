@@ -1,6 +1,7 @@
 .login_left_pane {
-  margin: 10% auto;
+  margin: 2% auto;
   line-height: 1.3em;
+  text-align: center;
 }
 
 .login_left_pane span {
