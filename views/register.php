@@ -27,6 +27,7 @@
       <section id="left_pane" class="register_left_pane">
         <h1>Welcome to the family!</h1>
         <span class="blue bold">Register to be a part of this journey.</span>
+        <img src="../assets/images/pictures/register.svg" width="100%"/>
       </section>
 
       <section id="right_pane" class="register_right_pane">

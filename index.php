@@ -27,6 +27,7 @@
     <main>
 
       <section id="left_pane" class="login_left_pane">
+        <img src="./assets/images/pictures/login.svg" width="100%"/>
         <h1>Welcome to a new experiences!</h1>
         <span class="blue bold">Login to proceed.</span>
       </section>
