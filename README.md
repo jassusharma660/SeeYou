@@ -22,9 +22,9 @@ A social networking website.
 <p align="center">
   <img width="70%" border="1" src="https://github.com/jassusharma660/SeeYou/blob/master/guide/2.png">
 </p>   
- 
+
 ---
->### Registration Page 
+>### Registration Page
 
 <p align="center">
   <img width="70%" border="1" src="https://github.com/jassusharma660/SeeYou/blob/master/guide/3.png">
@@ -38,7 +38,7 @@ A social networking website.
 </p>
 
 ---
->### Search suggestions 
+>### Search suggestions
 
 <p align="center">
   <img width="70%" border="1" src="https://github.com/jassusharma660/SeeYou/blob/master/guide/5.png">
@@ -57,7 +57,7 @@ A social networking website.
 <p align="center">
   <img width="70%" border="1" src="https://github.com/jassusharma660/SeeYou/blob/master/guide/7.png">
 </p>
- 
+
 ---
 >### Notifications Page
 
@@ -65,4 +65,9 @@ A social networking website.
   <img width="70%" border="1" src="https://github.com/jassusharma660/SeeYou/blob/master/guide/8.png">
 </p>
 
----
+---   
+
+
+Credit for images:  
+[www.freepik.com](https://www.freepik.com/free-photos-vectors/menu)  
+[icons8.com](https://icons8.com/)
