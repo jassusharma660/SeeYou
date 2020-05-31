@@ -1,3 +1,8 @@
+<?php
+include_once "../core/config.php";
+
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -33,6 +38,11 @@
       <section id="right_pane" class="register_right_pane">
         <div class="alert">
           <span>!</span><span>Create your SeeYou account to continue.</span>
+        </div>
+
+        <div class="server_side_alert">Username is already taken!
+            Username is already taken!
+
         </div>
         <div class="register_form">
           <form method="post" action="" name="registerForm" onsubmit="return validateRegister()">

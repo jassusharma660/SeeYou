@@ -14,7 +14,7 @@
 .register_right_pane .alert {
     font-size: 0.96em;
     width: 70%;
-    margin: 0 0 5vw 15%;
+    margin: 0 0 2% 15%;
 }
 
 .register_right_pane .alert span{
@@ -34,9 +34,19 @@
   margin-right: 0.5vw;
 }
 
+.register_right_pane .server_side_alert {
+    font-size: 0.96em;
+    width: 75%;
+    margin: 0 0 0 15%;
+    background: #B71C1C;
+    color: #fff;
+    padding: 2%;
+    word-break: break-all;
+}
+
 .register_form {
   width: 75%;
-  margin: 5vw 0 0 15%;
+  margin: 3% 0 0 15%;
 }
 
 .register_form_options {
