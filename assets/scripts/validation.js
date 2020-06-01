@@ -68,7 +68,7 @@ return bool
 function validUserName(n=document.forms["registerForm"]["username"]) {
   let error = document.getElementById('usernameInputFormError');
   if(n.value!="") {
-    if(n.value.length > 6 && n.value.length <= 20) {
+    if(n.value.length >= 6 && n.value.length <= 20) {
       if(/^[a-zA-Z0-9]+$/.test(n.value)) {
         error.style.display = "none";
         return true;
@@ -101,7 +101,7 @@ return bool
 function validEmail(n=document.forms["registerForm"]["email"]) {
   let error = document.getElementById('emailInputFormError');
   if(n.value!="") {
-    if(n.value.length > 6 && n.value.length <= 100) {
+    if(n.value.length > 7 && n.value.length <= 100) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if( re.test( (n.value).toLowerCase() ) ) {
         error.style.display = "none";
@@ -114,7 +114,7 @@ function validEmail(n=document.forms["registerForm"]["email"]) {
       }
     }
     else {
-      error.innerText = "Email should be 6-100 characters long.";
+      error.innerText = "Email should be 7-100 characters long.";
       error.style.display = "block";
       return false;
     }
@@ -147,7 +147,7 @@ return bool
 function validPassword(n=document.forms["registerForm"]["password"]) {
   let error = document.getElementById('passwordInputFormError');
   if(n.value!="") {
-    if(n.value.length > 6 && n.value.length <= 20) {
+    if(n.value.length >= 6 && n.value.length <= 20) {
       if( goodPassword(n.value) ) {
         error.style.display = "none";
         return true;
