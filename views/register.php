@@ -1,7 +1,22 @@
 <?php
+
 include_once "../core/config.php";
+include_once "../core/helper.php";
 
+$fullname = $username = $email = $password = $dob = "";
+$error = "";
 
+// Main function call
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if((isNameValid() === true) && (isUsernameValid() === true) &&
+     (isEmailValid() === true) && (isPasswordValid()) && (isDobValid())) {
+    $username = $_POST["username"];
+    $fullname = $_POST["fullname"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $dob = $_POST["dob"];
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -39,13 +54,13 @@ include_once "../core/config.php";
         <div class="alert">
           <span>!</span><span>Create your SeeYou account to continue.</span>
         </div>
-
-        <div class="server_side_alert">Username is already taken!
-            Username is already taken!
-
+        <?php if(!empty($error)) { ?>
+        <div id="server_side_alert">
+          <?= $error ?>
         </div>
+        <?php }?>
         <div class="register_form">
-          <form method="post" action="" name="registerForm" onsubmit="return validateRegister()">
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="registerForm" onsubmit="return validateRegister()">
             <!---Form-Start-Here--->
 
             <!-------------->
@@ -58,7 +73,7 @@ include_once "../core/config.php";
               </div>
               <div class="input_area">
                 <label for="fullname">Name</label>
-                <input type="text" name="fullname" onblur="validName()" placeholder="Enter your full name.">
+                <input type="text" name="fullname" onblur="validName()" placeholder="Enter your full name." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo trim($_POST['fullname']);?>">
               </div>
 
             </div>
@@ -72,7 +87,7 @@ include_once "../core/config.php";
               </div>
               <div class="input_area">
                 <label for="username">Username</label>
-                <input type="text" name="username" onblur="validUserName()" placeholder="Choose a username.">
+                <input type="text" name="username" onblur="validUserName()" placeholder="Choose a username." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo trim($_POST['username']);?>">
               </div>
             </div>
             <!-------------->
@@ -85,7 +100,7 @@ include_once "../core/config.php";
               </div>
               <div class="input_area">
                 <label for="email">Email</label>
-                <input type="email" name="email" onblur="validEmail()" placeholder="Enter your email.">
+                <input type="email" name="email" onblur="validEmail()" placeholder="Enter your email." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo trim($_POST['email']);?>">
               </div>
 
             </div>
@@ -99,7 +114,7 @@ include_once "../core/config.php";
               </div>
               <div class="input_area">
                 <label for="password">Password</label>
-                <input type="password" name="password" onblur="validPassword()" placeholder="Enter your password.">
+                <input type="password" name="password" onblur="validPassword()" placeholder="Enter your password." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo $_POST['password'];?>">
               </div>
 
             </div>
@@ -113,7 +128,7 @@ include_once "../core/config.php";
               </div>
               <div class="input_area">
                 <label for="password">Repeat Password</label>
-                <input type="password" name="rpassword" onblur="validRePassword()" placeholder="Repeat your password.">
+                <input type="password" name="rpassword" onblur="validRePassword()" placeholder="Repeat your password." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo $_POST['rpassword'];?>">
               </div>
 
             </div>
@@ -127,7 +142,7 @@ include_once "../core/config.php";
               </div>
               <div class="input_area">
                 <label for="dob">Birthday</label>
-                <input type="date" name="dob" onblur="validBirthday()"/>
+                <input type="date" name="dob" onblur="validBirthday()"  value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo $_POST['dob'];?>"/>
               </div>
 
             </div>
