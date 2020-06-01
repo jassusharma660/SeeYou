@@ -34,16 +34,6 @@
   margin-right: 0.5vw;
 }
 
-.register_right_pane .server_side_alert {
-    font-size: 0.96em;
-    width: 75%;
-    margin: 0 0 0 15%;
-    background: #B71C1C;
-    color: #fff;
-    padding: 2%;
-    word-break: break-all;
-}
-
 .register_form {
   width: 75%;
   margin: 3% 0 0 15%;
