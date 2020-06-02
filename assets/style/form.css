@@ -1,11 +1,12 @@
-#server_side_alert {
+#server_side_error {
     font-size: 0.96em;
     width: 75%;
     margin: 0 0 0 15%;
-    background: #B71C1C;
     color: #fff;
-    padding: 2%;
+    background: #B71C1C;
+    padding: 1vw;
 }
+
 .input_container {
   width: 100%;
   height: 4.5vw;
