@@ -5,17 +5,53 @@ include_once "../core/helper.php";
 
 $fullname = $username = $email = $password = $dob = "";
 $error = "";
-
 // Main function call
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if((isNameValid() === true) && (isUsernameValid() === true) &&
-     (isEmailValid() === true) && (isPasswordValid()) && (isDobValid())) {
-    $username = $_POST["username"];
-    $fullname = $_POST["fullname"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $dob = $_POST["dob"];
+
+  if( isset($_POST['fullname']) && isset($_POST['username']) &&
+    isset($_POST['email']) && isset($_POST['password']) &&
+    isset($_POST['rpassword']) && isset($_POST['dob'])) {
+
+    if((isNameValid() === true) && (isUsernameValid() === true) &&
+       (isEmailValid() === true) && (isPasswordValid()) && (isDobValid())) {
+      $username = trim($_POST["username"]);
+      $fullname = trim($_POST["fullname"]);
+      $email = trim($_POST["email"]);
+      $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+      $dob = trim($_POST["dob"]);
+
+      $sql_login = "INSERT INTO userlogindata(uid, email, pass) VALUES(?,?,?)";
+      $sql_profile = "INSERT INTO userprofiledata(uid, name, dob) VALUES(?,?,?)";
+
+      if($stmt_login = mysqli_prepare($con, $sql_login)) {
+        mysqli_stmt_bind_param($stmt_login,"sss", $username, $email, $password);
+
+        if(mysqli_stmt_execute($stmt_login)) {
+          //Add data to profile
+          if($stmt_profile = mysqli_prepare($con, $sql_profile)) {
+            mysqli_stmt_bind_param($stmt_profile,"sss", $username, $fullname, $dob);
+
+            if(mysqli_stmt_execute($stmt_profile)) {
+              header('location: ../?action=registerSuccess');
+            }
+          }
+          else
+            $error .= "Someting went wrong. Try again.";
+
+          mysqli_stmt_close($stmt_profile);
+        }
+        else
+          $error .= "Someting went wrong. Try again.";
+
+        mysqli_stmt_close($stmt_login);
+      }
+      else
+        $error .= "Oops! Someting went wrong. Try again.";
+      mysqli_close($con);
+    }
   }
+  else
+    $error .= "Invalid request! Please reload the page and try agin.";
 }
 ?>
 <!DOCTYPE html>
@@ -55,10 +91,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
           <span>!</span><span>Create your SeeYou account to continue.</span>
         </div>
         <?php if(!empty($error)) { ?>
-        <div id="server_side_alert">
+        <div id="server_side_error">
           <?= $error ?>
         </div>
-        <?php }?>
+        <?php } ?>
         <div class="register_form">
           <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="registerForm" onsubmit="return validateRegister()">
             <!---Form-Start-Here--->
@@ -73,7 +109,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               </div>
               <div class="input_area">
                 <label for="fullname">Name</label>
-                <input type="text" name="fullname" onblur="validName()" placeholder="Enter your full name." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo trim($_POST['fullname']);?>">
+                <input type="text" name="fullname" onblur="validName()" placeholder="Enter your full name." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['fullname'])) echo trim($_POST['fullname']);?>">
               </div>
 
             </div>
@@ -87,7 +123,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               </div>
               <div class="input_area">
                 <label for="username">Username</label>
-                <input type="text" name="username" onblur="validUserName()" placeholder="Choose a username." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo trim($_POST['username']);?>">
+                <input type="text" name="username" onblur="validUserName()" placeholder="Choose a username." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username'])) echo trim($_POST['username']);?>">
               </div>
             </div>
             <!-------------->
@@ -100,7 +136,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               </div>
               <div class="input_area">
                 <label for="email">Email</label>
-                <input type="email" name="email" onblur="validEmail()" placeholder="Enter your email." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo trim($_POST['email']);?>">
+                <input type="email" name="email" onblur="validEmail()" placeholder="Enter your email." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'])) echo trim($_POST['email']);?>">
               </div>
 
             </div>
@@ -114,7 +150,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               </div>
               <div class="input_area">
                 <label for="password">Password</label>
-                <input type="password" name="password" onblur="validPassword()" placeholder="Enter your password." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo $_POST['password'];?>">
+                <input type="password" name="password" onblur="validPassword()" placeholder="Enter your password." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['password'])) echo $_POST['password'];?>">
               </div>
 
             </div>
@@ -128,7 +164,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               </div>
               <div class="input_area">
                 <label for="password">Repeat Password</label>
-                <input type="password" name="rpassword" onblur="validRePassword()" placeholder="Repeat your password." value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo $_POST['rpassword'];?>">
+                <input type="password" name="rpassword" onblur="validRePassword()" placeholder="Repeat your password." value="">
               </div>
 
             </div>
@@ -142,7 +178,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               </div>
               <div class="input_area">
                 <label for="dob">Birthday</label>
-                <input type="date" name="dob" onblur="validBirthday()"  value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST') echo $_POST['dob'];?>"/>
+                <input type="date" name="dob" onblur="validBirthday()"  value="<?php if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dob'])) echo $_POST['dob'];?>"/>
               </div>
 
             </div>
