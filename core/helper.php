@@ -1,6 +1,5 @@
 <?php
-
-include_once "../core/config.php";
+/****Required config.php*****/
 
 $error = "";
 
@@ -36,7 +35,15 @@ function isNameValid() {
   }//End-NotEmpty
 }
 
-function isUsernameValid() {
+/***************************************************
+isUsernameValid()
+$cmd-
+  "shouldnotexist" - default, allow only new user
+  "validate" - just validate the input
+
+***************************************************/
+
+function isUsernameValid($cmd = "shouldnotexist") {
   global $error;
   global $con;
   // Username validation
@@ -47,30 +54,35 @@ function isUsernameValid() {
     if(strlen(trim($_POST['username']))<6 || strlen(trim($_POST['username']))>20)
       $error .= "Username should be 6-20 characters long.";
     else {
-      if(!preg_match("/^[a-zA-Z0-9]+$/",trim($_POST['username']) ))
+      if(!preg_match("/^[a-zA-Z0-9]+$/",trim($_POST['username'])))
         $error .= "Username can only be alphanumeric!";
       else {
-        $sql = "SELECT uid FROM userlogindata where uid=?";
+        if($cmd === "shouldnotexist") {
+          $sql = "SELECT uid FROM userlogindata where uid=?";
 
-        if($stmt = mysqli_prepare($con, $sql)) {
-          mysqli_stmt_bind_param($stmt, "s", $param_username);
-          $param_username = trim($_POST['username']);
+          if($stmt = mysqli_prepare($con, $sql)) {
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            $param_username = trim($_POST['username']);
 
-          if(mysqli_stmt_execute($stmt)) {
-            mysqli_stmt_store_result($stmt);
+            if(mysqli_stmt_execute($stmt)) {
+              mysqli_stmt_store_result($stmt);
 
-            if(mysqli_stmt_num_rows($stmt) == 1)
-              $error .= "Username is already taken!<br/>";
-            else
-              return true;
-
-          }//stmt execute
+              if(mysqli_stmt_num_rows($stmt) == 1)
+                $error .= "Username is already taken!<br/>";
+              else
+                return true;
+            }
+          }//End-mysql prepare
           else
             $error .= "Oops! Someting went wrong. Try again.";
           mysqli_stmt_close($stmt);
-        }//End-mysql prepare
-      }//End-preg_match
-    }//End-StringLen
+        }
+        else
+        if($cmd === "validate") {
+          return true; //valid username
+        }
+      }
+    }//End-preg_match
   }//End-NotEmpty
 }
 
@@ -113,29 +125,59 @@ function isEmailValid() {
   }//End-NotEmpty
 }
 
-function isPasswordValid() {
+
+/*********************************************************
+isPasswordValid()
+$cmd-
+  "pass" - validate password
+  "repass" - validate password as well as repeat password
+
+**********************************************************/
+
+function isPasswordValid($cmd = "repass") {
   global $error;
   // Password validation
-  if(empty($_POST['password']) || empty($_POST['rpassword'])) {
-    $error .= "Password or Repeat Password can't be empty!<br/>";
-  }
-  else {
-    if((strlen($_POST['password'])<6 || strlen($_POST['password'])>20) ||
-       (strlen($_POST['rpassword'])<6 || strlen($_POST['rpassword'])>20))
-      $error .= "Password or Repeat Password should be 6-15 characters long.";
-    else {
-      $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
 
-      if(!preg_match($regex_password,$_POST['password']) ||
-         !preg_match($regex_password,$_POST['rpassword']) )
-        $error .= "Password or Repeat Password should contain atleast an uppercase, a lowercase, a special character, and a number!";
-      else
-        if($_POST['password'] !== $_POST['rpassword'])
-          $error .= "Repeat Password should match Password!";
+  if($cmd == "repass") {
+    if(empty($_POST['password']) || empty($_POST['rpassword'])) {
+      $error .= "Password or Repeat Password can't be empty!<br/>";
+    }
+    else {
+      if((strlen($_POST['password'])<6 || strlen($_POST['password'])>20) ||
+         (strlen($_POST['rpassword'])<6 || strlen($_POST['rpassword'])>20))
+        $error .= "Password or Repeat Password should be 6-15 characters long.";
+      else {
+        $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
+
+        if(!preg_match($regex_password,$_POST['password']) ||
+           !preg_match($regex_password,$_POST['rpassword']) )
+          $error .= "Password or Repeat Password should contain atleast an uppercase, a lowercase, a special character, and a number!";
+        else
+          if($_POST['password'] !== $_POST['rpassword'])
+            $error .= "Repeat Password should match Password!";
+          else
+            return true;
+      }//End-StringLen
+    }//End-NotEmpty
+  }
+  else
+  if($cmd === "pass") {
+    if(empty($_POST['password'])) {
+      $error .= "Password can't be empty!<br/>";
+    }
+    else {
+      if(strlen($_POST['password'])<6 || strlen($_POST['password'])>20)
+        $error .= "Password should be 6-15 characters long.";
+      else {
+        $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
+
+        if(!preg_match($regex_password,$_POST['password']))
+          $error .= "Password should contain atleast an uppercase, a lowercase, a special character, and a number!";
         else
           return true;
-    }//End-StringLen
-  }//End-NotEmpty
+      }//End-StringLen
+    }
+  }
 }
 
 
