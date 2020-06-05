@@ -15,8 +15,4 @@ function togglePanel(e,name) {
 }
 window.onload = function() {
   showPanel(0);
-
-  document.getElementById('nameFieldEdit').addEventListener("click", function(){
-    document.forms['profileForm']['nameFieldEdit'].disabled=false;
-  });
 };
