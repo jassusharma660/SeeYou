@@ -100,7 +100,7 @@ header .options .alert {
 }
 
 header .search {
-  height: 3vw;
+  max-height: 3vw;
   width: 25%;
   float: right;
 }
@@ -144,18 +144,16 @@ header .search button{
   margin-left: 4%;
 }
 
-header .search .setting{
+header .search .setting,
+header .search .logout {
   height: 50%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
 }
-
-header #search_result a{
-  text-decoration: none;
-  color: #000;
-  width: 10vw;
+header .search .logout {
+  right: -20%;
 }
 
 header #search_result {
@@ -164,7 +162,7 @@ header #search_result {
   box-sizing: border-box;
   box-shadow: 0 2vw 1vw 0 rgba(0,0,0,0.2);
   overflow-y: scroll;
-  height: 35%;
+  max-height: 35%;
   width: 13.5vw;
   background-color: #fff;
   font-size: 0.8vw;
@@ -197,6 +195,17 @@ header #search_result .friend .user_dp{
 
 main {
   margin: 0 15%;
+}
+
+#server_side_error {
+  font-size: 0.96em;
+  width: 100%;
+  margin-bottom: 1vw;
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.2);
+  color: #fff;
+  background: #B71C1C;
+  padding: 0.5vw;
+  word-wrap: break-word;
 }
 
 #left_pane {
@@ -242,7 +251,7 @@ main {
 
 #right_pane .profile_card .user_dp{
   border-radius: 50%;
-  height: 100%;
+  width: 35%;
   display: inline-block;
   vertical-align: middle;
 }
