@@ -18,12 +18,43 @@ include_once "./core/helper.php";
 
 $username = $password = "";
 $error = "";
+
+
 if (!isset($_SESSION['attempts']))
   $_SESSION['attempts'] = 0;
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+//Reset password function
+/*
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) && $_POST['submit']=="reset") {
+  if(isset($_POST['email'])) {
+    $regex_email = "/^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/";
+    if(!preg_match($regex_email,trim($_POST['email'])))
+      $error .= "Email is not valid!";
+    else {
+      $hash = bin2hex(random_bytes(25));
+      $sql = "SELECT uid FROM userresetdata WHERE email=?;";
+
+      if($stmt = mysqli_prepare($con, $sql)) {
+        mysqli_stmt_bind_param($stmt, "s", trim($_POST['email']));
+        if(mysqli_stmt_execute($stmt)) {
+          if(mysqli_stmt_num_rows($stmt) > 0) {
+            echo "a record";
+          }
+          else
+            echo "no record";
+        }
+        else
+          echo "hi";
+      }
+    }
+  }
+}
+*/
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) && $_POST['submit']=="Login Now") {
   if(isset($_POST['username']) && isset($_POST['password'])) {
-    if(isUsernameValid("validate") && isPasswordValid("pass")) {
+    if(isUsernameValid("validate") && isPasswordValid("pass",$_POST['password'])) {
       $sql = "SELECT uid, pass, status from userlogindata WHERE uid=?";
 
       if($stmt = mysqli_prepare($con, $sql)) {
@@ -124,7 +155,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <?php } ?>
         <div class="login_form">
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="loginForm" onsubmit="/*return validateLogin()*/">
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="loginForm" onsubmit="return validateLogin()">
             <!---Form-Start-Here--->
             <div class="inputFormError" id="usernameInputFormError"></div>
 
@@ -162,7 +193,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               <a href="#" onclick="showPopup(true)">Forgot Password?</a>
             </div>
             <div class="login_form_button bottom_buttons">
-              <input type="submit" name="" id="submit" value="Login Now">
+              <input type="submit" name="submit" id="submit" value="Login Now">
               <button type="button" onclick="window.location.href='./views/register.php';" name="register">Create Account</button>
             </div>
             <!-------------->
@@ -174,9 +205,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div id="reset_form">
           <span>Forgot Password?</span>
           Don't Worry! Just type your email.
-          <form method="post" action="" name="resetForm" onsubmit="return false">
-            <input type="email" name="email" value="" placeholder="Enter your email">
-            <button>
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="resetForm">
+            <input type="hidden" name="action" value="reset"/>
+            <input type="email" name="email" value="" placeholder="Enter your email" required>
+            <button type="submit" name="submit" value="reset">
               <img src="./assets/images/icons/enter-100.png"/>
             </button>
           </form>
