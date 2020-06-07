@@ -86,7 +86,7 @@ function isUsernameValid($cmd = "shouldnotexist") {
   }//End-NotEmpty
 }
 
-function isEmailValid() {
+function isEmailValid($sameEmailAllowed = false) {
   global $error;
   global $con;
   // Email validation
@@ -101,7 +101,10 @@ function isEmailValid() {
       if(!preg_match($regex_email,trim($_POST['email'])))
         $error .= "Email is not valid!";
       else {
-        $sql = "SELECT email FROM userlogindata where email=?";
+        if($sameEmailAllowed)
+          $sql = "SELECT email FROM userlogindata where email=? and uid<>?";
+        else
+          $sql = "SELECT email FROM userlogindata where email=?";
 
         if($stmt = mysqli_prepare($con, $sql)) {
           mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -134,7 +137,7 @@ $cmd-
 
 **********************************************************/
 
-function isPasswordValid($cmd = "repass") {
+function isPasswordValid($cmd = "repass", $password = "") {
   global $error;
   // Password validation
 
@@ -162,16 +165,16 @@ function isPasswordValid($cmd = "repass") {
   }
   else
   if($cmd === "pass") {
-    if(empty($_POST['password'])) {
+    if(empty($password)) {
       $error .= "Password can't be empty!<br/>";
     }
     else {
-      if(strlen($_POST['password'])<6 || strlen($_POST['password'])>20)
+      if(strlen($password)<6 || strlen($password)>20)
         $error .= "Password should be 6-15 characters long.";
       else {
         $regex_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/";
 
-        if(!preg_match($regex_password,$_POST['password']))
+        if(!preg_match($regex_password,$password))
           $error .= "Password should contain atleast an uppercase, a lowercase, a special character, and a number!";
         else
           return true;
