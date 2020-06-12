@@ -1,9 +1,16 @@
 <?php
 //error_reporting(0);
-define('DB_SERVER','localhost');
-define('DB_USERNAME','seeyou_dba');//seeyou_dba
-define('DB_PASSWORD','You_Password_123');//You_Password_123
-define('DB_NAME','seeyouuserdb');
+
+$cleardb_url      = parse_url(getenv("CLEARDB_DATABASE_URL"));
+$cleardb_server   = $cleardb_url["host"];
+$cleardb_username = $cleardb_url["user"];
+$cleardb_password = $cleardb_url["pass"];
+$cleardb_db       = substr($cleardb_url["path"],1);
+
+define('DB_SERVER', $cleardb_server);
+define('DB_USERNAME', $cleardb_username);
+define('DB_PASSWORD',$cleardb_password);
+define('DB_NAME', $cleardb_db);
 
 $con = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 

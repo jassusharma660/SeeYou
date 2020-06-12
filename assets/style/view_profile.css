@@ -11,8 +11,8 @@ section.profile_card {
 }
 
 section.profile_card .profile_pic {
-  width: 5vw;
-  height: 5vw;
+  width: 10vw;
+  height: 10vw;
 }
 
 section.profile_card .profile_pic img{
